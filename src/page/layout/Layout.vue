@@ -2,8 +2,7 @@
     <div id="layout">
         <div class="charts">
           <div class="titleBoxs">
-            <div></div>
-            <div></div>
+
           </div>
             <div class="titleBox">
               <div v-for="(item, index) in nav" @click="routerLink(index, item.path)" class = "ind_title" :class="navIndex === index ? 'ind_title_active' : ''">
@@ -86,26 +85,16 @@ export default {
     }
     .titleBoxs {
       width: 100%;
-      height: 7vh;
+      height: 9.5vh;
       position: fixed;
       top: 0;
       z-index: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      div{
-        height: 100%;
-        width: 50%;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        float: left;
-      }
-      div:nth-child(1){
-        background-image:url('../../../static/img/top_left.png');
-      }
-      div:nth-child(2){
-        background-image:url('../../../static/img/top_right.png');
-      }
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-image:url('../../../static/img/title-bg.png');
     }
 
     .titleBox{
@@ -119,7 +108,7 @@ export default {
       justify-content: space-between;
 
       .ind_title{
-        width: 8%;
+        width: 7%;
         line-height: 7vh;
       }
 
@@ -134,10 +123,10 @@ export default {
         background-image:url('../../../static/img/active.png');
       }
       .ind_title:nth-child(5){
-        width: 20%;
+        width: 22%;
       }
       .ind_title:nth-child(1),.ind_title:nth-child(9){
-        width: 16%;
+        width: 18%;
       }
       h4{
         font-size: 2.5vh;
