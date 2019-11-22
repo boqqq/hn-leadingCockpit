@@ -112,7 +112,32 @@ export default {
         line-height: 7vh;
       }
 
-      .ind_title:hover{
+      .ind_title:nth-child(2):hover{
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-image:url('../../../static/img/active.png');
+      }
+      .ind_title:nth-child(3):hover{
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-image:url('../../../static/img/active.png');
+      }
+      .ind_title:nth-child(4):hover{
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-image:url('../../../static/img/active.png');
+      }
+      .ind_title:nth-child(6):hover{
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-image:url('../../../static/img/active.png');
+      }
+      .ind_title:nth-child(7):hover{
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-image:url('../../../static/img/active.png');
+      }
+      .ind_title:nth-child(8):hover{
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-image:url('../../../static/img/active.png');
@@ -123,10 +148,10 @@ export default {
         background-image:url('../../../static/img/active.png');
       }
       .ind_title:nth-child(5){
-        width: 22%;
+        width: 20%;
       }
       .ind_title:nth-child(1),.ind_title:nth-child(9){
-        width: 18%;
+        width: 17%;
       }
       h4{
         font-size: 2.5vh;
