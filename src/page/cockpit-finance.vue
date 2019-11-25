@@ -53,7 +53,6 @@
   import 'font-awesome/css/font-awesome.min.css';
   import {config} from '../../static/js/config/chartConfig.js';
   var echarts = require('echarts');
-  import '../../static/js/map/hainan.js';
   import hainan from '../../static/js/json/hainan.json';
   export default {
     name:"cockpit-finance",

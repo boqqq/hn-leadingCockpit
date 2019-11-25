@@ -67,7 +67,6 @@
   import 'font-awesome/css/font-awesome.min.css';
   import {config} from '../../static/js/config/chartConfig.js';
   var echarts = require('echarts');
-  import '../../static/js/map/hainan.js';
   import hainan from '../../static/js/json/hainan.json';
   import $ from 'jquery';
   export default {
@@ -107,7 +106,7 @@
               //alert(JSON.stringify(params))
               var result = params[0].name
               result += '<br/>'+params[0].seriesName + '：' + params[0].data+
-                "万人</br>" + params[2].seriesName + '：' + params[2].data+' %';
+                "万人</br>" + params[1].seriesName + '：' + params[1].data+' %';
               return result
             }
           },

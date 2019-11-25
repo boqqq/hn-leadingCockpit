@@ -5,9 +5,13 @@
 
           </div>
             <div class="titleBox">
+              <div class = "ind_title">
+                <p>{{time}}</p>
+              </div>
               <div v-for="(item, index) in nav" @click="routerLink(index, item.path)" class = "ind_title" :class="navIndex === index ? 'ind_title_active' : ''">
                 <h4>{{item.title}}</h4>
               </div>
+              <div class = "ind_title"></div>
             </div>
             <router-view></router-view>
         </div>
@@ -20,8 +24,8 @@ import $ from 'jquery';
 export default {
     data(){
         return{
+            time:'',
             nav: [
-              {title: '',path:''},
               {title: '首页', path: '/index'},
               {title: '财政能力', path: '/cockpitFinance'},
               {title: '人力资源', path: '/cockpitHuman'},
@@ -29,12 +33,24 @@ export default {
               {title: '市场环境', path: '/cockpitMarket'},
               {title: '基础设施', path: '/cockpitFacilities'},
               {title: '公共服务', path: '/cockpitService'},
-              {title: '',path:''},
             ],
             navIndex:1,
             title:'海南领导人驾驶舱',
-            isCollapse:false
+            isCollapse:false,
         }
+    },
+    mounted () {
+      this.currentPage()
+      var that = this;
+      setInterval(function () {
+        var date = new Date();
+        var h = (date.getHours()>9?date.getHours():"0"+date.getHours());
+        var m = (date.getMinutes()>9?date.getMinutes():"0"+date.getMinutes());
+        var s = (date.getSeconds()>9?date.getSeconds():"0"+date.getSeconds());
+        var month = date.getMonth()+1;
+        that.time = date.getFullYear()+'年'+ month + '月' + date.getDate() + '日  ' + h +':'+ m +':'+ s+'  周'+"日一二三四五六".charAt(new Date().getDay());
+        //alert(this.time)
+      },500);
     },
     methods: {
       routerLink(index, path) {
@@ -44,6 +60,7 @@ export default {
         }
         //this.threeGo()
       },
+
       currentPage(){
         var s = 0
         for (let i = 0; i < this.nav.length; i++) {
@@ -59,8 +76,6 @@ export default {
         this.navIndex = this.nav.findIndex(item => item.path === path);
         console.log(path,"path")
       },
-
-
     },
     watch: {
         // "$route"() {
@@ -69,9 +84,6 @@ export default {
         //     // 检索当前路径
         //     this.checkRouterLocal(path);
         // }
-    },
-    mounted () {
-      this.currentPage()
     },
 }
 </script>
@@ -110,6 +122,16 @@ export default {
       .ind_title{
         width: 7%;
         line-height: 7vh;
+      }
+      .ind_title:nth-child(1){
+        height: 7vh;
+        font-size: 2vh;
+        color: #fff;
+        text-align: center;
+        p{
+          margin-right: 10%;
+          margin-top: 1vh;
+        }
       }
 
       .ind_title:nth-child(2):hover{

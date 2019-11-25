@@ -1,6 +1,6 @@
 <template>
   <div id="index">
-    <div class = "chart_main">
+    <div class = "main">
       <el-row>
         <el-col :span="7">
           <div class = "chart_main">
@@ -83,7 +83,6 @@
     import 'font-awesome/css/font-awesome.min.css';
     import {config} from '../../static/js/config/chartConfig.js';
     var echarts = require('echarts');
-    import '../../static/js/map/hainan.js';
     import hainan from '../../static/js/json/hainan.json';
     export default {
       name: "cockpit-market",
