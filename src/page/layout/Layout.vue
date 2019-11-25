@@ -54,7 +54,7 @@ export default {
     },
     methods: {
       routerLink(index, path) {
-        if(index != 0 && index != 4 && index != 8){
+        if(index != 3){
           this.navIndex = index;
           this.$router.push(path)
         }
