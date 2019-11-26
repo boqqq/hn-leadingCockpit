@@ -2,7 +2,7 @@
   <div id="index">
     <div class = "main">
       <el-row>
-        <el-col :span="7">
+        <el-col :span="6">
           <div class = "chart_main">
             <div class = "chart_child" style="margin: 0vh 1vh 0 2vh">
               <div class="pop_col_tit">
@@ -27,13 +27,20 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="10">
+        <el-col :span="12">
           <div class = "chart_main">
             <el-row>
               <el-col :span="24">
                 <div class="map_title map_tab">
                   <div><h4>市场环境</h4></div>
-                  <div v-for="(item,index) in mapDim" ><p :class = "radio == index?'p_active':''" @click = "mapChange(index)">{{item}}</p></div>
+                  <el-select class="selectbox" popper-class="selectpop" v-model="radio" placeholder="请选择" clearable size="mini" @change="map">
+                    <el-option
+                      v-for="(item,index) in mapDim"
+                      :key="index"
+                      :label="item"
+                      :value="index">
+                    </el-option>
+                  </el-select>
                 </div>
                 <div  id = "map" class = "chart_map  main_map"></div>
               </el-col>
@@ -43,13 +50,13 @@
                     <i class="tit_icon icon-tit-line"></i>
                     <h3>市场环境构成指标因子贡献</h3>
                   </div>
-                  <div id = "chart7"></div>
+                  <div class = "chart" id = "chart7"></div>
                 </div>
               </el-col>
             </el-row>
           </div>
         </el-col>
-        <el-col :span="7">
+        <el-col :span="6">
           <div class = "chart_main">
             <div class = "chart_child" style="margin: 0vh 1vh 0 2vh">
               <div class="pop_col_tit">
@@ -318,8 +325,8 @@
             '琼中黎族自治县': [109.846811, 19.038617]
           }
           let data=[]
-          var tip = '财政收支规模'
-          if(this.radio=='1'){
+          var tip = this.mapDim[this.radio]
+          if(this.radio==1||this.radio==3||this.radio==5||this.radio==7){
             data = [
               {name: '海口市', value: 1 },
               {name: '三亚市', value: 2 },
@@ -343,7 +350,6 @@
 
             ];
           }else{
-            tip = '财政收支平衡度'
             data = [
               {name: '海口市', value: 2 },
               {name: '三亚市', value: 4 },
@@ -374,7 +380,6 @@
           let max = Math.max.apply(null, dataValues);
           let min = Math.min.apply(null, dataValues);
 
-          console.log(max, min) // 55,6
           //取得json的样式，读取json文件
           echarts.registerMap('hainan', hainan)
           let handleData = function(data) {
@@ -799,7 +804,148 @@
           chart.setOption(option);
           window.onresize = chart.resize;
         },
-        chart7(){},
+        chart7(){
+          var chart=echarts.init(document.getElementById('chart7'));
+          var xData = ['海口市','三亚市','三沙市','儋州市','五指山市','文昌市','琼海市','万宁市',
+            '东方市','定安县','屯昌县','澄迈县','临高县','白沙','昌江','乐东','陵水','保亭','琼中'];
+          var data1 = [96,35,65,51,44,67,66,17,17,15,7,13,24,29,33,47,59,66,81];
+          var data2 = [96,75,34,44,54,78,20,22,9,23,8,13,20,29,39,40,57,61,51];
+          var data3 = [96,65,32,38,40,80,34,33,16,7,22,13,33,29,51,42,63,56,71];
+          var data4 = [66,55,17,96,11,34,72,12,11,12,12,13,45,29,35,55,70,46,31];
+          var data5 = [46,35,67,78,19,58,19,21,29,21,16,13,16,29,49,67,69,49,51];
+          var option = {
+            tooltip: {
+              trigger: 'axis',
+              textStyle: config().textStyle,
+              axisPointer: {
+                type: 'shadow'
+              }
+            },
+            legend: { //图例的设置
+              show: true, //是否显示图例
+              //icon: 'circle',//图例形状，示例为原型
+              top: '2%',//图例离底部的距离
+              right:"4%",
+              itemWidth: config().fontSize, // 图例标记的图形宽度。
+              itemHeight: config().fontSize, // 图例标记的图形高度。
+              itemGap: config().fontSize, // 图例每项之间的间隔。
+              textStyle: config().textStyle,
+              data: ['财政能力', '人力资源','市场环境','基础设施','公共服务'],//图例的名称数据
+            },
+            grid: {
+              left: '5%',
+              right: '5%',
+              bottom: '8%',
+              top:'20%',
+              containLabel: true
+            },
+            xAxis: [{
+              type: 'category',
+              data: xData,
+              axisLine: {
+                lineStyle: {
+                  color: 'rgba(255,255,255,0.12)'
+                }
+              },
+              axisLabel: {
+                margin: 10,
+                textStyle:config().textStyle,
+              },
+            }],
+            yAxis: [{
+              name:'',
+              nameTextStyle: {
+                color: '#fff',
+                fontSize: config().fontSize,
+                padding: [0, 0, 0, -config().fontSize*2.5],
+              },
+              axisLabel: {
+                formatter: '{value}',
+                textStyle:config().textStyle,
+              },
+              axisLine: {
+                show: false
+              },
+              splitLine: {
+                lineStyle: {
+                  color: 'rgba(255,255,255,0.12)'
+                }
+              }
+            }],
+            series: [{
+              name:'财政能力',
+              type: 'bar',
+              data: data1,
+              stack:'1',
+              barWidth: '40%',
+              itemStyle: {
+                normal: {
+                  color: '#388BFF',
+                  shadowColor: 'rgba(0,160,221,1)',
+                  shadowBlur: 4,
+                }
+              }
+            },
+              {
+                name:'人力资源',
+                type: 'bar',
+                data: data2,
+                stack:'1',
+                barWidth: '40%',
+                itemStyle: {
+                  normal: {
+                    color: '#0263FF',
+                    shadowColor: 'rgba(0,160,221,1)',
+                    shadowBlur: 4,
+                  }
+                }
+              },
+              {
+                name:'市场环境',
+                type: 'bar',
+                data: data3,
+                stack:'1',
+                barWidth: '40%',
+                itemStyle: {
+                  normal: {
+                    color: '#F6931C',
+                    shadowColor: 'rgba(0,160,221,1)',
+                    shadowBlur: 4,
+                  }
+                }
+              },
+              {
+                name:'基础设施',
+                type: 'bar',
+                data: data4,
+                stack:'1',
+                barWidth: '40%',
+                itemStyle: {
+                  normal: {
+                    color: '#FFD52E',
+                    shadowColor: 'rgba(0,160,221,1)',
+                    shadowBlur: 4,
+                  }
+                }
+              },
+              {
+                name:'公共服务',
+                type: 'bar',
+                data: data5,
+                stack:'1',
+                barWidth: '40%',
+                itemStyle: {
+                  normal: {
+                    color: '#00FFFF',
+                    shadowColor: 'rgba(0,160,221,1)',
+                    shadowBlur: 4,
+                  }
+                }
+              }]
+          };
+          chart.setOption(option);
+          window.onresize = chart.resize;
+        },
       }
     }
 </script>
@@ -853,25 +999,37 @@
         margin-top: 2vh;
       }
     }
-    .map_tab{
-       div{
-         margin-top: 2vh;
-         p{
-           width: 80%;
-           margin-left: 5%;
-           border-radius: 2vh;
-           background-color: #021274;
-           font-size: 2vh;
-           line-height: 4vh;
-           text-align: center;
-         }
-         p:hover{
-           background-color: #001DD0;
-         }
-         .p_active{
-           background-color: #001DD0;
-         }
-       }
-     }
+    /deep/ .selectbox{
+      .el-input .el-input__inner{
+        font-size: 2vh;
+        line-height: 4vh;
+        color:#fff;
+        border-radius: 2vh;
+        background-color: #001DD0;
+        border-color: #001DD0;
+      }
+    }
+
+  }
+</style>
+<style lang="scss">
+  .selectpop{
+    color: #fff;
+    background-color: #021274;
+    border:none;
+    font-size: 2vh;
+    line-height: 4vh;
+    &.el-popper > .popper__arrow, &.el-popper > .popper__arrow::after{
+      border-bottom-color:#021274;
+    }
+    .el-select-dropdown__list {
+      & > .el-select-dropdown__item {
+        color: #fff;
+      }
+
+      & > .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+        background-color: #001DD0;
+      }
+    }
   }
 </style>
