@@ -110,7 +110,7 @@
       components: {
       },
       mounted () {
-        this.chart1();
+        this.$index('规模以上工业企业单位数').then(this.chart1);
         this.chart2();
         this.map();
         this.chart3();
@@ -120,11 +120,9 @@
         this.chart7();
       },
       methods: {
-        chart1(){
+        chart1(data){
+          var store = this.convertData(data)
           var chart=echarts.init(document.getElementById('chart1'));
-          var xData = ['海口市','三亚市','三沙市','儋州市','五指山市','文昌市','琼海市','万宁市',
-            '东方市','定安县','屯昌县','澄迈县','临高县','白沙','昌江','乐东','陵水','保亭','琼中'];
-          var data1 = [96,94,92,91,90,85,82,82,81,80,76,75,73,71,66,64,62,61,58];
           var option = {
             tooltip: {
               trigger: 'axis',
@@ -142,7 +140,7 @@
             },
             xAxis: [{
               type: 'category',
-              data: xData,
+              data: store.xdata,
               axisLine: {
                 lineStyle: {
                   color: 'rgba(255,255,255,0.12)'
@@ -169,7 +167,7 @@
             }],
             series: [{
               type: 'bar',
-              data: data1,
+              data: store.sdata[0],
               barWidth: '40%',
               itemStyle: {
                 normal: {

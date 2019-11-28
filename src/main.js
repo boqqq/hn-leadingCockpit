@@ -21,6 +21,47 @@ Vue.use(tagCloud)
 
 // 挂载全局
 Vue.prototype.$http = httpRequest // ajax请求方法
+
+//指标请求
+
+Vue.prototype.$index = function(indName,prtName){
+  var $this = this
+  return new Promise((resolve, reject) => {
+    this.$http({
+      url: $this.$http.adornUrl("/t08basicesdata/list"),
+      method: 'get',
+      params: $this.$http.adornParams({
+        indexName:encodeURIComponent(indName),
+        parentIndexName:encodeURIComponent(prtName||'')
+      })
+    }).then(({data}) => {
+      if(data.code != 0){
+        $this.$message({
+          showClose: true,
+          message: data.msg,
+          type: 'warning'
+        });
+        return;
+      }
+      resolve(data.data);
+    }).catch(function (error) {
+      reject(error);
+      console.error(error);
+    });
+  });
+}
+Vue.prototype.convertData = function(data, xdim, sarr) {
+  xdim = xdim || 'areaName';
+  sarr = sarr || ['stateNumGrowth'];
+  let store = {xdata:[],sdata:[]};
+  store.xdata = Array.from(new Set(data.map(d=>{return d[xdim]})));
+  sarr.forEach(name=>{
+    let a = data.map(d=>{return d[name]})
+    store.sdata.push(a)
+  })
+  return store
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

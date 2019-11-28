@@ -4,7 +4,7 @@ import axios from 'axios'
 import qs from 'qs'
 import merge from 'lodash/merge'
 //import { clearLoginInfo } from './utils'
-var por = 'http://59.212.226.51:9002/home';
+var por = 'http://localhost:9005/home';
 // ''http://59.212.226.51:9002/home';
 // 'http://localhost:9002/home';
 const http = axios.create({
